@@ -37,5 +37,8 @@ server.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
 
+// Start hangouts client
+app.client = require('./components/hangouts');
+
 // Expose app
 exports = module.exports = app;
