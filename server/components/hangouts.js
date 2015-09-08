@@ -6,6 +6,7 @@ var _ = require('underscore');
 // means the user must fire up their browser and get the
 // requested token.
 var creds = function() {
+  console.log('TOKEN URL: ', Client.OAUTH2_LOGIN_URL);
   return {
     auth: _.constant(process.env.HANGOUTS_TOKEN)
     //auth: Client.authStdin
