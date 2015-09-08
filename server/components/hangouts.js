@@ -44,8 +44,7 @@ client.on('chat_message', function(ev) {
 
 var reconnect = function() {
   client.connect(creds).then(function() {
-    //return client.sendchatmessage(process.env.HANGOUTS_CONV_ID,
-    return client.sendchatmessage('UgyU8IOOS2uslw1tjV54AaABAQ',
+    return client.sendchatmessage(process.env.HANGOUTS_CONV_ID || 'UgyU8IOOS2uslw1tjV54AaABAQ',
       [[0, 'gg']]);
   }).done();
 };
