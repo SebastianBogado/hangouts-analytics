@@ -4,7 +4,7 @@
   <div class="container">
     <h1>Ranking LGD</h1>
     <p class="lead">El premio al más LGD</p>
-    <img src="assets/images/shydino.jpg" alt="Shydino approves" class=" img-circle" style="width: 100px;">
+    <img src="assets/images/shydino.jpg" alt="Shydino approves" class="img-circle" style="width: 100px;">
   </div>
 </header>
 
@@ -21,7 +21,10 @@
       <tbody>
         <tr ng-repeat="lgd in participants | orderBy: '-totalMessages'" ng-style="{'font-size': getFontSize(lgd.totalMessages, totalMessages) + 'px'}">
           <td>{{$index + 1}}</td>
-          <td>{{lgd.displayName}}</td>
+          <td>
+            <img src="{{lgd.photoUrl}}" class="img-circle" ng-style="{'width': getFontSize(lgd.totalMessages, totalMessages) + 'px'}">
+            {{lgd.displayName}}
+          </td>
           <td>{{lgd.totalMessages}}</td>
         </tr>
       </tbody>
@@ -33,6 +36,3 @@
   </div>
 </div>
 
-<div class="col-md-12">
-This is the ranking view.
-</div>

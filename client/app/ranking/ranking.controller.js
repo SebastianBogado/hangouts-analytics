@@ -17,7 +17,7 @@ angular.module('hangoutsAnalyticsApp')
     }, 0);
 
     var MAX_FONT = 40,
-      MIN_FONT = 12;
+      MIN_FONT = 14;
     $scope.getFontSize = function (lgdTotalMessages, totalMessages) {
       var ratio = lgdTotalMessages / totalMessages,
         font = MAX_FONT * ratio;
