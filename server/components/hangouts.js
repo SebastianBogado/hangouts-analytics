@@ -73,10 +73,10 @@ client.on('chat_message', function(ev) {
   var userName = '';
 
 
-  Participant.findOneQ({hangoutsUserId: userId}, '_id')
+  Participant.findOneQ({hangoutsUserId: userId}, '_id displayName')
     .then( function getParticipant(participant) {
-      console.log(participant)
       if (participant) {
+        userName = participant.displayName;
         return participant;
       } else {
         return client.getentitybyid([userId])
@@ -120,8 +120,8 @@ client.on('chat_message', function(ev) {
 
 var reconnect = function() {
   client.connect(creds).then(function() {
-    return client.sendchatmessage(process.env.HANGOUTS_CONV_ID || 'UgyU8IOOS2uslw1tjV54AaABAQ',
-      [[0, 'gg']]);
+    //return client.sendchatmessage(process.env.HANGOUTS_CONV_ID || 'UgyU8IOOS2uslw1tjV54AaABAQ',
+    //  [[0, 'gg']]);
   }).done();
 };
 
