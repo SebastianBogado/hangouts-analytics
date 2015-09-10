@@ -2,9 +2,18 @@ var Client = require('hangupsjs');
 var Q = require('q');
 var _ = require('underscore');
 var app = {};
+
+//TODO, improve fucking relative paths
+var Participant = require('../api/participant/participant.model');
+var Message = require('../api/message/message.model');
+
+// TODO maybe mongoose-q package to avoid manual q binds?
+Participant.findOneQ = Q.nbind(Participant.findOne, Participant);
+Participant.updateQ = Q.nbind(Participant.update, Participant);
+
 /**
  * db stored cookies WIP
- * 
+ *
 var cookiesJson = '{"accounts.google.com":{"/":{"GAPS":{"key":"GAPS","value":"1:8ErsogYTgba1dhaUqqSoX7OAZqW8KA:g8VC1nXmqscmdN54","expires":"2017-09-07T06:20:42.000Z","domain":"accounts.google.com","path":"/","secure":true,"httpOnly":true,"extensions":["Priority=HIGH"],"hostOnly":true,"creation":"2015-09-08T06:20:41.862Z","lastAccessed":"2015-09-08T06:20:42.612Z"},"LSID":{"key":"LSID","value":"DQAAAPsAAABbAJpOia1-816uiTqusgRamnHsn9q7Vte7fEJ3-nE2g4i8E_XFiBsytSie-ZGyatVANVYHmXO1s-UdQ9ZdmODkLGn3cfIj2cMxG6JhMyZQ5ea7JRxW1WjRvNeGFm5IsGsc1Tod7lxSKMUiAUDLmCVmq7hOJ1ll-apAVTr1WxkZUzfjAg1-eN4eqaxAX-v3C1QdHeYq1r3CJWQA2-tp7tZyf11fIUeFyY5tZGgKfIgmv3k-m7ACDwWKgBShZDCY4sCbwyKoBD51mQVO68Al7_4v_WayV6ByFP7ptP1t9RdAXyiEpFRKJheqvxGmZokid6F2MSScHtq6cmjiqbzOVFB4","expires":"2017-09-07T06:20:41.000Z","domain":"accounts.google.com","path":"/","secure":true,"httpOnly":true,"extensions":["Priority=HIGH"],"hostOnly":true,"creation":"2015-09-08T06:20:42.295Z","lastAccessed":"2015-09-08T06:20:42.301Z"},"ACCOUNT_CHOOSER":{"key":"ACCOUNT_CHOOSER","value":"AFx_qI7rXozn0FYbmwITmzMDQxi8aR7WucR1XTiNIpqcpfmMbl07goqD1kAMvSw3M61bOQabKHcN-PYjXON5LmJT9ri0autUneG3BUNaXO0bNZiss2bpnbLD7S0IxbYQOzickgdwVkXj","expires":"2017-09-07T06:20:41.000Z","domain":"accounts.google.com","path":"/","secure":true,"httpOnly":true,"extensions":["Priority=HIGH"],"hostOnly":true,"creation":"2015-09-08T06:20:42.300Z","lastAccessed":"2015-09-08T06:20:42.301Z"}}},"google.com":{"/":{"SID":{"key":"SID","value":"DQAAAPkAAABMDxH5NpAV6XmYFPr10swB0xKkF02PoTNgTAfQGyM9XNy9nn2r3_ZvFLPLOe6gU62zUVALflb57o4tuByfdl0lBmPGAG2x9vGdZj31dUElQ9NqSoYG9gSyq2p66iagXhnsCXQ6VVHMv80uOGgyUWKFtBdYoJRLqQhuZOApxV_XIfR1F7TovZXZG91Cczq00T5OSXJ7i_v__QAKNIaYJaXpF0DGlqT8p2frrG5ZrEyy4BF-BRioIVclFdpO2ROTojYrDDI1xQlqje7IabzSodfURmgp_JBfoTe1Dc_UdJ3rvYPSUgZwu51fNSaF2PBFThJZyss6klRvwOFeM1m5T_fR","expires":"2017-09-07T06:20:41.000Z","domain":"google.com","path":"/","hostOnly":false,"creation":"2015-09-08T06:20:42.294Z","lastAccessed":"2015-09-08T06:20:42.895Z"},"HSID":{"key":"HSID","value":"A1Blz0_U81CThwYNj","expires":"2017-09-07T06:20:41.000Z","domain":"google.com","path":"/","httpOnly":true,"extensions":["Priority=HIGH"],"hostOnly":false,"creation":"2015-09-08T06:20:42.296Z","lastAccessed":"2015-09-08T06:20:42.895Z"},"SSID":{"key":"SSID","value":"Ave6xZ_DmmnTyQnol","expires":"2017-09-07T06:20:41.000Z","domain":"google.com","path":"/","secure":true,"httpOnly":true,"extensions":["Priority=HIGH"],"hostOnly":false,"creation":"2015-09-08T06:20:42.297Z","lastAccessed":"2015-09-08T06:20:42.895Z"},"APISID":{"key":"APISID","value":"22wYGgpUPZ8IDSVb/AJoSTEjgRgKjG5z0A","expires":"2017-09-07T06:20:41.000Z","domain":"google.com","path":"/","extensions":["Priority=HIGH"],"hostOnly":false,"creation":"2015-09-08T06:20:42.298Z","lastAccessed":"2015-09-08T06:20:42.895Z"},"SAPISID":{"key":"SAPISID","value":"hNKWeg6ex_2G-Yqm/ATGhOmSsnNPMf_6iL","expires":"2017-09-07T06:20:41.000Z","domain":"google.com","path":"/","secure":true,"extensions":["Priority=HIGH"],"hostOnly":false,"creation":"2015-09-08T06:20:42.299Z","lastAccessed":"2015-09-08T06:20:42.895Z"},"NID":{"key":"NID","value":"71=hLKnsrtCI-eDBU-13AUpQLR4Wdnzq3fARwv_FTcWuVPv-U_OAMY6Mgbf7qX5kHPS3dU4AnEudR8p9mJiq1oN17S66kPwhSZDfdRiT71YZu4pL6q4xgCjLC3OzB-wUr-U","expires":"2016-03-09T06:20:41.000Z","domain":"google.com","path":"/","httpOnly":true,"hostOnly":false,"creation":"2015-09-08T06:20:42.300Z","lastAccessed":"2015-09-08T06:20:42.895Z"}}},"google.com.ar":{"/":{"PREF":{"key":"PREF","value":"ID=1111111111111111:FF=0:TM=1441693242:LM=1441693242:V=1:S=zKMgxErcK5u81x2k","expires":"2015-12-31T16:02:17.000Z","domain":"google.com.ar","path":"/","hostOnly":false,"creation":"2015-09-08T06:20:42.865Z","lastAccessed":"2015-09-08T06:20:42.865Z"}}},"talkgadget.google.com":{"/":{"S":{"key":"S","value":"talkgadget=QH_QT08gIVgTzIOlxXJ4SA","domain":"talkgadget.google.com","path":"/","secure":true,"httpOnly":true,"hostOnly":true,"creation":"2015-09-08T06:20:43.332Z","lastAccessed":"2015-09-08T06:20:43.332Z"}}}}';
 var cookies     = JSON.parse(cookiesJson);
 
@@ -61,16 +70,46 @@ client.on('chat_message', function(ev) {
   var userId = ev.sender_id.chat_id;
   var chatMessage = _.pluck(ev.chat_message.message_content.segment, 'text').join('');
   var timestamp = ev.timestamp;
-  //console.log(ev);
-  client.getentitybyid([userId])
-    .then( function (response) {
-      var userProperties = response.entities[0].properties;
-      var userName = userProperties.display_name;
-      var photoUrl = userProperties.photo_url;
-      console.log('convId: ', convId);
-      console.log('userId: ', userId, ', name: ', userName);
-      console.log('timestamp: ', timestamp);
-      console.log('chatMessage: ', chatMessage);
+  var userName = '';
+
+
+  Participant.findOneQ({hangoutsUserId: userId}, '_id totalMessages')
+    .then( function getParticipant(participant) {
+      console.log(participant)
+      if (participant) {
+        return participant;
+      } else {
+        return client.getentitybyid([userId])
+          .then( function (response) {
+            var userProperties = response.entities[0].properties;
+
+            var participant = new Participant({
+              firstName: userProperties.first_name,
+              displayName: userName = userProperties.display_name,
+              photoUrl: userProperties.photo_url,
+              hangoutsUserId: userId
+            });
+
+            return Q.nfcall(participant.save)
+              .then(_.constant(participant));
+          });
+        }
+      })
+    .then( function saveMessage(participant) {
+
+      var message = new Message({
+        text: chatMessage,
+        timestamp: ev.timestamp,
+        participanId: participant._id
+      });
+
+      return Q.nfcall(message.save);
+    })
+    .then( function updateParticipantsTotalMessages() {
+      return Participant.updateQ({ hangoutsUserId: userId}, { $inc: { totalMessages: 1 }});
+    })
+    .then( function logStuff() {
+      console.log("%s said [%s]: %s", userName, new Date(timestamp), chatMessage);
     })
     .fail(function (err) {
       console.error(err);
