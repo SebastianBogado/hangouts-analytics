@@ -10,13 +10,20 @@ exports.register = function(socket) {
   Participant.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
+  //Participant.schema.post('update', function (doc) {
+  //  onSave(socket, doc);
+  //});
   Participant.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
-}
+};
 
 function onSave(socket, doc, cb) {
   socket.emit('participant:save', doc);
+}
+
+function onUpdate(socket, doc, cb) {
+  socket.emit('participant:update', doc);
 }
 
 function onRemove(socket, doc, cb) {

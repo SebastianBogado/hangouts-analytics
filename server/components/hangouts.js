@@ -62,7 +62,7 @@ var creds = function() {
 var client = new Client();
 
 // set more verbose logging
-client.loglevel('debug');
+client.loglevel('info');
 
 // receive chat message events
 client.on('chat_message', function(ev) {
@@ -73,7 +73,7 @@ client.on('chat_message', function(ev) {
   var userName = '';
 
 
-  Participant.findOneQ({hangoutsUserId: userId}, '_id totalMessages')
+  Participant.findOneQ({hangoutsUserId: userId}, '_id')
     .then( function getParticipant(participant) {
       console.log(participant)
       if (participant) {
