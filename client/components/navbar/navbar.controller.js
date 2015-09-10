@@ -5,6 +5,14 @@ angular.module('hangoutsAnalyticsApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+    }, {
+      'title': 'Ranking',
+      'link': '/ranking',
+      shouldShow: Auth.isLoggedIn
+    }, {
+      'title': 'Admin',
+      'link': '/admin',
+      shouldShow: Auth.isAdmin
     }];
 
     $scope.isCollapsed = true;

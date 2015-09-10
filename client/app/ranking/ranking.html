@@ -1,0 +1,38 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>Ranking LGD</h1>
+    <p class="lead">El premio al más LGD</p>
+    <img src="assets/images/shydino.jpg" alt="Shydino approves" class=" img-circle" style="width: 100px;">
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12"><table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>LGD</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="lgd in participants | orderBy: '-totalMessages'" ng-style="{'font-size': getFontSize(lgd.totalMessages, totalMessages) + 'px'}">
+          <td>{{$index + 1}}</td>
+          <td>{{lgd.displayName}}</td>
+          <td>{{lgd.totalMessages}}</td>
+        </tr>
+      </tbody>
+    </table>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in awesomeThings">
+        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="deleteThing(thing)">&times;</button></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12">
+This is the ranking view.
+</div>
