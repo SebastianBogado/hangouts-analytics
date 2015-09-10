@@ -38,7 +38,8 @@ server.listen(config.port, config.ip, function () {
 });
 
 // Start hangouts client
-app.client = require('./components/hangouts');
+//app.client = require('./components/hangouts')(app);
+require('./components/hangouts')(app);
 
 // Expose app
 exports = module.exports = app;
