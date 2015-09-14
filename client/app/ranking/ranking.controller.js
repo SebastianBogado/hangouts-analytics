@@ -7,15 +7,13 @@ angular.module('hangoutsAnalyticsApp')
       then(function(response) {
         $scope.participants = response.data;
 
-        $scope.totalMessages = _.reduce($scope.participants, function (total, participant) {
-          return total + participant.totalMessages;
-        }, 0);
+        $scope.maxMessages = _.max($scope.participants, _.iteratee('totalMessages'));
 
         socket.syncUpdates('participant', $scope.participants, function (ev, item) {
           if (ev === 'delete') {
-            $scope.totalMessages -= item.totalMessages;
+            $scope.maxMessages = _.max($scope.participants, _.iteratee('totalMessages'));
           } else if (ev === 'updated') {
-            $scope.totalMessages++;
+            $scope.maxMessages = Math.max($scope.maxMessages, item.totalMessages);
           }
         });
       });
@@ -33,8 +31,8 @@ angular.module('hangoutsAnalyticsApp')
 
     var MAX_FONT = 40,
       MIN_FONT = 14;
-    $scope.getFontSize = function getFontSize(lgdTotalMessages, totalMessages) {
-      var ratio = lgdTotalMessages / totalMessages,
+    $scope.getFontSize = function getFontSize(lgdTotalMessages, maxMessages) {
+      var ratio = lgdTotalMessages / maxMessages,
         font = MAX_FONT * ratio;
 
       return Math.max(MIN_FONT, font);
