@@ -41,6 +41,10 @@ client.loglevel('info');
 // receive chat message events
 client.on('chat_message', function(ev) {
   var convId = ev.conversation_id.id;
+
+  // Work only with the conversation set as env var
+  if (convId !== process.env.HANGOUTS_CONV_ID) return;
+
   var userId = ev.sender_id.chat_id;
   var chatMessage = _.pluck(ev.chat_message.message_content.segment, 'text').join('');
   var timestamp = ev.timestamp / 1000; // Timestamp is in microseconds >.<
