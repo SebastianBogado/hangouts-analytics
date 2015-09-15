@@ -7,11 +7,11 @@ angular.module('hangoutsAnalyticsApp')
       then(function(response) {
         $scope.participants = response.data;
 
-        $scope.maxMessages = _.max($scope.participants, _.property('totalMessages'));
+        $scope.maxMessages = _.max($scope.participants, _.property('totalMessages')).totalMessages;
 
         socket.syncUpdates('participant', $scope.participants, function (ev, item) {
           if (ev === 'delete') {
-            $scope.maxMessages = _.max($scope.participants, _.property('totalMessages'));
+            $scope.maxMessages = _.max($scope.participants, _.property('totalMessages')).totalMessages;
           } else if (ev === 'updated') {
             $scope.maxMessages = Math.max($scope.maxMessages, item.totalMessages);
           }
