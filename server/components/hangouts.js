@@ -43,7 +43,7 @@ client.on('chat_message', function(ev) {
   var convId = ev.conversation_id.id;
   var userId = ev.sender_id.chat_id;
   var chatMessage = _.pluck(ev.chat_message.message_content.segment, 'text').join('');
-  var timestamp = ev.timestamp;
+  var timestamp = ev.timestamp / 1000; // Timestamp is in microseconds >.<
   var userName = '';
 
 
@@ -94,7 +94,7 @@ client.on('chat_message', function(ev) {
 
 var reconnect = function() {
   client.connect(creds).then(function() {
-    console.log('Connected to hangouts. Shydino would approve.');
+    console.log('Connected to hangouts. Shydino approves.');
     //return client.sendchatmessage(process.env.HANGOUTS_CONV_ID || 'UgyU8IOOS2uslw1tjV54AaABAQ',
     //  [[0, 'gg']]);
   }).done();

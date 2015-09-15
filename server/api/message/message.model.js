@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var MessageSchema = new Schema({
   text: String,
-  timestamp: String,
+  timestamp: Date,
   participanId: { type: Schema.ObjectId, index: true },
   //convId: String
 });
