@@ -10,22 +10,24 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-12"><table class="table table-striped">
+    <div class="col-lg-12"><table class="table table-striped ranking">
       <thead>
         <tr>
           <th>#</th>
           <th>LGD</th>
-          <th>Total</th>
+          <th class="text-right">Total</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="lgd in participants | orderBy: '-totalMessages'" ng-style="{'font-size': getFontSize(lgd.totalMessages, maxMessages) + 'px'}">
+        <tr ng-repeat="lgd in participants | orderBy: '-totalMessages'"
+            ng-style="{'font-size': getFontSize(lgd.totalMessages, maxMessages) + 'em'}"
+            class="lgd">
           <td>{{$index + 1}}</td>
           <td>
-            <img src="{{lgd.photoUrl}}" class="img-circle" ng-style="{'width': getFontSize(lgd.totalMessages, maxMessages) + 'px'}">
+            <img src="{{lgd.photoUrl}}" class="img-circle" ng-style="{'width': getImgWidth(lgd.totalMessages, maxMessages) + 'em'}">
             {{lgd.displayName}}
           </td>
-          <td>{{lgd.totalMessages}}</td>
+          <td class="text-right">{{lgd.totalMessages}}</td>
         </tr>
       </tbody>
     </table>
