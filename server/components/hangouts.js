@@ -77,14 +77,14 @@ client.on('chat_message', function(ev) {
 
       var message = new Message({
         text: chatMessage,
-        timestamp: ev.timestamp,
+        timestamp: timestamp,
         participanId: participant._id
       });
 
       return Q.nfcall(message.save);
     })
     .then( function updateParticipantsTotalMessages() {
-      return Participant.updateQ({ hangoutsUserId: userId}, { $inc: { totalMessages: 1 }});
+      return Participant.updateQ({ hangoutsUserId: userId }, { $inc: { totalMessages: 1 }});
     })
     .then( function logStuff() {
       console.log("%s said [%s]: %s", userName, new Date(timestamp), chatMessage);
