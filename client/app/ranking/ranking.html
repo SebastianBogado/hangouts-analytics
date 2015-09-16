@@ -42,13 +42,17 @@
           <tab-heading>
             <i class="fa fa-bar-chart"></i> Barras
           </tab-heading>
-          <h1>I herd u liek cherts</h1>
+          <canvas id="bar" class="chart chart-bar"
+                  chart-data="chartMessageCount" chart-labels="chartLabels">
+          </canvas>
         </tab>
         <tab>
           <tab-heading>
             <i class="fa fa-pie-chart"></i> Torta
           </tab-heading>
-          <h1>I herd u liek cherts</h1>
+          <canvas id="pie" class="chart chart-pie"
+                  chart-data=chartMessageCount[0] chart-labels="chartLabels">
+          </canvas>
         </tab>
       </tabset>
     </div>

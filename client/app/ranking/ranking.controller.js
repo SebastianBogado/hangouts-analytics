@@ -3,9 +3,14 @@
 angular.module('hangoutsAnalyticsApp')
   .controller('RankingCtrl', function ($scope, $http, socket) {
 
+    // TODO IMPROVE: chart logic mixed with table logic
+    $scope.chartLabels = [];
+    $scope.chartMessageCount = [];
     $http.get('/api/participants').
       then(function(response) {
         $scope.participants = response.data;
+        $scope.chartLabels = _.pluck($scope.participants, 'displayName');
+        $scope.chartMessageCount[0] = _.pluck($scope.participants, 'totalMessages');
 
         $scope.maxMessages = _.max($scope.participants, _.property('totalMessages')).totalMessages;
 
@@ -15,6 +20,9 @@ angular.module('hangoutsAnalyticsApp')
           } else if (ev === 'updated') {
             $scope.maxMessages = Math.max($scope.maxMessages, item.totalMessages);
           }
+
+          $scope.chartLabels = _.pluck($scope.participants, 'displayName');
+          $scope.chartMessageCount[0] = _.pluck($scope.participants, 'totalMessages');
         });
       });
 
