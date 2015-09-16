@@ -84,7 +84,14 @@ client.on('chat_message', function(ev) {
       return Q.nfcall(message.save);
     })
     .then( function updateParticipantsTotalMessages() {
-      return Participant.updateQ({ hangoutsUserId: userId }, { $inc: { totalMessages: 1 }});
+      // TODO using atomic update like below is way MOAR performant
+      //return Participant.updateQ({ hangoutsUserId: userId }, { $inc: { totalMessages: 1 }});
+      // TODO IMPROVE finding the participant in db just so that the update triggers an event? faaaaaaaail
+      return Participant.findOneQ({ hangoutsUserId: userId })
+        .then(function (participant) {
+          participant.totalMessages++;
+          participant.save();
+        });
     })
     .then( function logStuff() {
       console.log("%s said [%s]: %s", userName, new Date(timestamp), chatMessage);
