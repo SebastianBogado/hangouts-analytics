@@ -25,8 +25,8 @@
               class="lgd">
             <td>{{$index + 1}}</td>
             <td>
-              <img src="{{lgd.photoUrl}}" class="img-circle" ng-style="{'width': getImgWidth(lgd.totalMessages, maxMessages) + 'em'}">
-              {{lgd.displayName}}
+              <img src="{{::lgd.photoUrl}}" class="img-circle" ng-style="{'width': getImgWidth(lgd.totalMessages, maxMessages) + 'em'}">
+              {{::lgd.displayName}}
             </td>
             <td class="text-right">{{lgd.totalMessages}}</td>
           </tr>
