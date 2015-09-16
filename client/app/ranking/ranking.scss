@@ -1,3 +1,7 @@
+.nav.nav-tabs > li > a {
+  cursor: pointer;
+}
+
 .ranking {
   font-size: 24px;
   @media (min-width: $screen-sm-min) {
