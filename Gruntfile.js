@@ -243,7 +243,10 @@ module.exports = function (grunt) {
             '<%= yeoman.dist %>/public/{,*/}*.js',
             '<%= yeoman.dist %>/public/{,*/}*.css',
             '<%= yeoman.dist %>/public/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/public/assets/fonts/*'
+            '<%= yeoman.dist %>/public/assets/fonts/*',
+            // Hotfixes a known issue when a folder has dots in its name https://github.com/cbas/grunt-rev/issues/29
+            '!<%= yeoman.dist %>/public/bower_components/Chart.js',
+            '!<%= yeoman.dist %>/public/bower_components/angular-chart.js'
           ]
         }
       }
@@ -263,7 +266,12 @@ module.exports = function (grunt) {
     usemin: {
       html: ['<%= yeoman.dist %>/public/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/public/{,*/}*.css'],
-      js: ['<%= yeoman.dist %>/public/{,*/}*.js'],
+      js: [
+        '<%= yeoman.dist %>/public/{,*/}*.js',
+        // Hotfixes a known issue when a folder has dots in its name https://github.com/cbas/grunt-rev/issues/29
+        '!<%= yeoman.dist %>/public/bower_components/Chart.js',
+        '!<%= yeoman.dist %>/public/bower_components/angular-chart.js'
+      ],
       options: {
         assetsDirs: [
           '<%= yeoman.dist %>/public',
