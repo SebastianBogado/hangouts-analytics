@@ -5,6 +5,7 @@ var _ = require('lodash');
 
 var Message = require('../../api/message/message.model');
 var Participant = require('../../api/participant/participant.model');
+var Snapshot = require('../../api/snapshot/snapshot.model');
 
 Participant.findQ = Q.nbind(Participant.find, Participant);
 
@@ -29,9 +30,9 @@ function populateResultsWithParticipants(results) {
   }
 }
 
-module.exports = function() {
-  var to = new Date();
-  var from = new Date(to.getTime() - 14*24*60*60*1000);
+module.exports = function(cron) {
+  var to = cron.nextRun;
+  var from = new Date(to.getTime() - 1*24*60*60*1000);
 
   var def = Q.defer();
 
@@ -51,16 +52,21 @@ module.exports = function() {
         .then(populateResultsWithParticipants(results))
         .then( function saveSnapshot(results) {
 
-          var snapshot = {
+          var snapshot = new Snapshot({
             type: 'daily',
             timespan: {
               from: from,
               to: to
             },
             ranking: _.sortBy(results, 'totalMessages').reverse()
-          };
+          });
 
-          console.log(snapshot)
+          return Q.nfcall(snapshot.save)
+            .then(_.constant(snapshot));
+        })
+        .then( function logStuff(snapshot) {
+          console.log("Snapshot type %s from %s to %s saved.", snapshot.type, snapshot.timespan.from, snapshot.timespan.to);
+          def.resolve();
         })
         .fail(def.reject);
     });

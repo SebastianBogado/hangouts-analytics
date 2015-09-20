@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/snapshot/snapshot.socket').register(socket);
   require('../api/cron/cron.socket').register(socket);
   require('../api/message/message.socket').register(socket);
   require('../api/participant/participant.socket').register(socket);

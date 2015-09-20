@@ -11,7 +11,7 @@ var crons = [{
   name: 'dailyMessages',
   description: 'Counts daily messages',
   unixExpression: '0 0 0 * * 2-6',
-  file: './snapshot.daily',nextRun: new Date() -1
+  file: './snapshot.daily',nextRun: new Date(1442718000233)
 }, {
   name: 'weeklyMessages',
   description: 'Counts weekly messages',
@@ -31,15 +31,16 @@ var crons = [{
 
 
 _.each(crons, function initCron(cron) {
-  var cronJob = new CronJob(cron.unixExpression, runJob, null, false, TZ),
+  var cronJob = new CronJob(cron.unixExpression, runJob, null, false, TZ, cron),
     startCronJob = _.bind(cronJob.start, cronJob),
     task = require(cron.file);
 
-  function runJob() {
-    return task()
+  function runJob(cron) {
+    cron = cron || this;
+    return task(cron)
       .then( function updateRunDates() {
         cron.lastRun = new Date();
-        cron.nextRun = cronJob.cronTime.sendAt();
+        cron.nextRun = cronJob.cronTime.sendAt().toDate();
         console.log('%s finished on %s. Will run again on %s', cron.name, cron.lastRun, cron.nextRun);
       })
       .fail( function handleError(err) {
@@ -51,11 +52,11 @@ _.each(crons, function initCron(cron) {
   // Job should have run already. Maybe the app was off at that time
   if (cron.nextRun < new Date()) {
     console.log('%s will run now', cron.name);
-    runJob()
+    runJob(cron)
       .then(startCronJob);
   } else {
     startCronJob();
-    cron.nextRun = cronJob.cronTime.sendAt();
+    cron.nextRun = cronJob.cronTime.sendAt().toDate();
     console.log('%s will run on %s', cron.name, cron.nextRun);
   }
 });
