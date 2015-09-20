@@ -2,6 +2,7 @@
 
 var Q = require('q');
 var _ = require('lodash');
+var moment = require('moment');
 
 var Message = require('../../api/message/message.model');
 var Participant = require('../../api/participant/participant.model');
@@ -32,7 +33,7 @@ function populateResultsWithParticipants(results) {
 
 module.exports = function(cron) {
   var to = cron.nextRun;
-  var from = new Date(to.getTime() - 1*24*60*60*1000);
+  var from = moment(to).subtract(1, 'days').toDate();
 
   var def = Q.defer();
 
