@@ -40,6 +40,7 @@ server.listen(config.port, config.ip, function () {
 // Start hangouts client
 //app.client = require('./components/hangouts')(app);
 require('./components/hangouts')(app);
+require('./components/jobs')(app);
 
 // Expose app
 exports = module.exports = app;

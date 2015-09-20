@@ -5,8 +5,9 @@ var mongoose = require('mongoose'),
 
 var MessageSchema = new Schema({
   text: String,
+  // Consider an index on timestamp?
   timestamp: Date,
-  participanId: { type: Schema.ObjectId, index: true },
+  participantId: { type: Schema.ObjectId, index: true },
   //convId: String
 });
 

@@ -1,3 +1,5 @@
+'use strict';
+
 var Client = require('hangupsjs');
 var Q = require('q');
 var _ = require('underscore');
@@ -78,7 +80,7 @@ client.on('chat_message', function(ev) {
       var message = new Message({
         text: chatMessage,
         timestamp: timestamp,
-        participanId: participant._id
+        participantId: participant._id
       });
 
       return Q.nfcall(message.save);
