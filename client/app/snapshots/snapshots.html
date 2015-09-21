@@ -1,0 +1,31 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <h3>Snapshots</h3>
+      <h5>TODO DARLE FACHA LAWL</h5>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Type</th>
+          <th>Timespan</th>
+          <th>Winner</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="snapshot in snapshots" ui-sref="snapshot({id: snapshot._id})">
+          <td>{{::snapshot.type}}</td>
+          <td>
+            {{::snapshot.timespan.from | date: 'EEEE dd/MM/yy'}} - {{::snapshot.timespan.to | date: 'EEEE dd/MM/yy'}}
+          </td>
+          <td>{{::snapshot.ranking[0].displayName}}</td>
+          <td><a ></a></td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
