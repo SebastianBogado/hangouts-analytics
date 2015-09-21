@@ -12,9 +12,9 @@ Participant.findQ = Q.nbind(Participant.find, Participant);
 
 var typeSustracts = {
   daily: 'days',
-  weekly: 'week',
-  monthly: 'month',
-  yearly: 'year'
+  weekly: 'weeks',
+  monthly: 'months',
+  yearly: 'years'
 };
 
 function populateResultsWithParticipants(results) {
