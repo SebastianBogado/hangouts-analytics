@@ -53,7 +53,8 @@ module.exports = function (snapshotType) {
       .match( {timestamp: { $lt: to, $gte: from}})
       .project( 'participantId -_id')
       .group({_id: "$participantId", totalMessages: {$sum: 1}})
-      .allowDiskUse(true)
+      // Invalid option in Mongo v2.4 >.<, fuck Openshift
+      //.allowDiskUse(true)
       .exec( function execAggregation(err, results) {
         if (err) return def.reject(err);
 
