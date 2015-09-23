@@ -29,8 +29,8 @@ function runCron(cron) {
     task = require(cron.file);
 
   function runJob(cron) {
-    setCronStatus(cron.name, 'running');
     cron = cron || this;
+    setCronStatus(cron.name, 'running');
     return task(cron)
       .then( function updateRunDates() {
         setCronStatus(cron.name, 'waiting');
