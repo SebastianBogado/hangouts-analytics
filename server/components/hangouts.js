@@ -8,6 +8,8 @@ var config = require('../config/environment');
 
 
 //TODO, improve fucking relative paths
+// Maybe this https://gist.github.com/branneman/8048520
+// or this https://lostechies.com/derickbailey/2014/02/20/how-i-work-around-the-require-problem-in-nodejs/
 var Participant = require('../api/participant/participant.model');
 var Message = require('../api/message/message.model');
 
