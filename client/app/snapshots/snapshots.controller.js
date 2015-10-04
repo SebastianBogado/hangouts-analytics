@@ -7,7 +7,7 @@ angular.module('hangoutsAnalyticsApp')
         $scope.snapshots = response.data;
       });
   })
-  .controller('SnapshotCtrl', function ($scope, $http, socket, $stateParams) {
+  .controller('SnapshotCtrl', function ($scope, $http, $stateParams) {
 
     // TODO IMPROVE: chart logic mixed with table logic
     $scope.chartLabels = [];
@@ -20,16 +20,7 @@ angular.module('hangoutsAnalyticsApp')
 
         $scope.maxMessages = _.max($scope.participants, _.property('totalMessages')).totalMessages;
 
-        socket.syncUpdates('participant', $scope.participants, function (ev, item) {
-          if (ev === 'delete') {
-            $scope.maxMessages = _.max($scope.participants, _.property('totalMessages')).totalMessages;
-          } else if (ev === 'updated') {
-            $scope.maxMessages = Math.max($scope.maxMessages, item.totalMessages);
-          }
 
-          $scope.chartLabels = _.pluck($scope.participants, 'displayName');
-          $scope.chartMessageCount[0] = _.pluck($scope.participants, 'totalMessages');
-        });
       });
 
 
