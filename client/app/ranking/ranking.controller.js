@@ -9,10 +9,11 @@ angular.module('hangoutsAnalyticsApp')
     $http.get('/api/participants').
       then(function(response) {
         $scope.participants = response.data;
-        $scope.chartLabels = _.pluck($scope.participants, 'displayName');
-        $scope.chartMessageCount[0] = _.pluck($scope.participants, 'totalMessages');
+        var sortedParticipants = _.sortBy($scope.participants, _.iteratee('totalMessages')).reverse();
+        $scope.chartLabels = _.pluck(sortedParticipants, 'displayName');
+        $scope.chartMessageCount[0] = _.pluck(sortedParticipants, 'totalMessages');
 
-        $scope.maxMessages = _.max($scope.participants, _.property('totalMessages')).totalMessages;
+        $scope.maxMessages = _.max(sortedParticipants, _.property('totalMessages')).totalMessages;
 
         socket.syncUpdates('participant', $scope.participants, function (ev, item) {
           if (ev === 'delete') {
@@ -21,8 +22,9 @@ angular.module('hangoutsAnalyticsApp')
             $scope.maxMessages = Math.max($scope.maxMessages, item.totalMessages);
           }
 
-          $scope.chartLabels = _.pluck($scope.participants, 'displayName');
-          $scope.chartMessageCount[0] = _.pluck($scope.participants, 'totalMessages');
+          var sortedParticipants = _.sortBy($scope.participants, _.iteratee('totalMessages')).reverse();
+          $scope.chartLabels = _.pluck(sortedParticipants, 'displayName');
+          $scope.chartMessageCount[0] = _.pluck(sortedParticipants, 'totalMessages');
         });
       });
 
