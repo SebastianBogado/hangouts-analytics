@@ -22,7 +22,7 @@ angular.module('hangoutsAnalyticsApp')
             $scope.maxMessages = Math.max($scope.maxMessages, item.totalMessages);
           }
 
-          var sortedParticipants = _.sortBy($scope.participants, _.iteratee('totalMessages')).reverse();
+          var sortedParticipants = _.sortBy($scope.participants, _.property('totalMessages')).reverse();
           $scope.chartLabels = _.pluck(sortedParticipants, 'displayName');
           $scope.chartMessageCount[0] = _.pluck(sortedParticipants, 'totalMessages');
         });
