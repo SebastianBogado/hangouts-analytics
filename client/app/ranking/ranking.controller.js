@@ -9,7 +9,7 @@ angular.module('hangoutsAnalyticsApp')
     $http.get('/api/participants').
       then(function(response) {
         $scope.participants = response.data;
-        var sortedParticipants = _.sortBy($scope.participants, _.iteratee('totalMessages')).reverse();
+        var sortedParticipants = _.sortBy($scope.participants, _.property('totalMessages')).reverse();
         $scope.chartLabels = _.pluck(sortedParticipants, 'displayName');
         $scope.chartMessageCount[0] = _.pluck(sortedParticipants, 'totalMessages');
 
