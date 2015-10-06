@@ -6,15 +6,10 @@ var request = require('supertest');
 
 describe('GET /api/crons', function() {
 
-  it('should respond with JSON array', function(done) {
+  it('should respond with 404', function(done) {
     request(app)
       .get('/api/crons')
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end(function(err, res) {
-        if (err) return done(err);
-        res.body.should.be.instanceof(Array);
-        done();
-      });
+      .expect(404)
+      .end(done);
   });
 });
