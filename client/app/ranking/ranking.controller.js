@@ -7,7 +7,7 @@ angular.module('hangoutsAnalyticsApp')
       .then(function(response) {
         $scope.participants = sortParticipants(response.data);
 
-        socket.syncUpdates('participant', $scope.participants, function (ev, item) {
+        socket.syncUpdates('participant', $scope.participants, function () {
           $scope.participants = sortParticipants($scope.participants);
         });
       });

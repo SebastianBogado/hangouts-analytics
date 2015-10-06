@@ -13,7 +13,7 @@ angular.module('hangoutsAnalyticsApp')
         $scope.chartMessageCount = [];
 
         $scope.$watch('participants', function updateChartData(newVal) {
-          if (!newVal) return;
+          if (!newVal) { return; }
 
           $scope.chartLabels = _.pluck($scope.participants, 'displayName');
           $scope.chartMessageCount[0] = _.pluck($scope.participants, 'totalMessages');

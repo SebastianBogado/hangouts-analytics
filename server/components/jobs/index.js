@@ -29,6 +29,7 @@ function runCron(cron) {
     task = require(cron.file);
 
   function runJob(cron) {
+    /*jshint validthis:true */
     cron = cron || this;
     setCronStatus(cron.name, 'running');
     return task(cron)

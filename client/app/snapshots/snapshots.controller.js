@@ -33,7 +33,7 @@ angular.module('hangoutsAnalyticsApp')
     $scope.getFontSize = function getFontSize(lgdTotalMessages, maxMessages) {
       var ratio = lgdTotalMessages / maxMessages;
 
-      return Math.max(.35, ratio);
+      return Math.max(0.35, ratio);
     };
 
     $scope.getImgWidth = function getImgWidth(lgdTotalMessages, maxMessages) {

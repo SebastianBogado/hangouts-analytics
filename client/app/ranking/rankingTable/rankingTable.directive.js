@@ -12,7 +12,7 @@ angular.module('hangoutsAnalyticsApp')
       controller: function ($scope) {
 
         $scope.$watch('participants', function updateMaxMessages(newVal) {
-          if (!newVal) return;
+          if (!newVal) { return; }
 
           $scope.maxMessages = _.max(newVal, _.property('totalMessages')).totalMessages;
         }, true);
@@ -20,7 +20,7 @@ angular.module('hangoutsAnalyticsApp')
         $scope.getFontSize = function getFontSize(lgdTotalMessages, maxMessages) {
           var ratio = lgdTotalMessages / maxMessages;
 
-          return Math.max(.35, ratio);
+          return Math.max(0.35, ratio);
         };
 
         $scope.getImgWidth = function getImgWidth(lgdTotalMessages, maxMessages) {
