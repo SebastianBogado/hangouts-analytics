@@ -1,0 +1,21 @@
+<table class="table table-striped ranking">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>LGD</th>
+    <th class="text-right">Total</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="lgd in participants"
+      ng-style="{'font-size': getFontSize(lgd.totalMessages, maxMessages) + 'em'}"
+      class="lgd">
+    <td>{{$index + 1}}</td>
+    <td>
+      <img src="{{::lgd.photoUrl}}" class="img-circle" ng-style="{'width': getImgWidth(lgd.totalMessages, maxMessages) + 'em'}">
+      {{::lgd.displayName}}
+    </td>
+    <td class="text-right">{{lgd.totalMessages}}</td>
+  </tr>
+  </tbody>
+</table>
