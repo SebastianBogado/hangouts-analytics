@@ -1,8 +1,9 @@
 # LGD Hangouts Analytics
 
+```
 rm -rf dist
 heroku git:clone -a hangouts-analytics dist
-
+```
 
 
 # Run the app
@@ -16,8 +17,11 @@ The trick is that you need to get the OAuth2 token manually, so you'll run
 grunt serve
 ```
 
-And you'll see in the console TOKEN URL: https://someurl.
-Got there, select your account, and get the token.
+And you'll see in the console 
+```
+TOKEN URL: https://someurl.
+```
+Go there, select your account, and get the token.
 
 Now you're ready to set both
 
