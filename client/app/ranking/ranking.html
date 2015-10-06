@@ -22,17 +22,13 @@
           <tab-heading>
             <i class="fa fa-bar-chart"></i> Barras
           </tab-heading>
-          <canvas id="bar" class="chart chart-bar"
-                  chart-data="chartMessageCount" chart-labels="chartLabels">
-          </canvas>
+          <ranking-bar-chart participants="participants"></ranking-bar-chart>
         </tab>
         <tab>
           <tab-heading>
             <i class="fa fa-pie-chart"></i> Torta
           </tab-heading>
-          <canvas id="pie" class="chart chart-pie"
-                  chart-data=chartMessageCount[0] chart-labels="chartLabels">
-          </canvas>
+          <ranking-pie-chart participants="participants"></ranking-pie-chart>
         </tab>
       </tabset>
     </div>

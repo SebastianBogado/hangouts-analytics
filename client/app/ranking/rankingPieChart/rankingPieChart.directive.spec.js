@@ -1,10 +1,10 @@
 'use strict';
 
-describe('Directive: rankingTable', function () {
+describe('Directive: rankingPieChart', function () {
 
   // load the directive's module and view
   beforeEach(module('hangoutsAnalyticsApp'));
-  beforeEach(module('app/ranking/rankingTable/rankingTable.html'));
+  beforeEach(module('app/ranking/rankingPieChart/rankingPieChart.html'));
 
   var element, rootScope, scope, isolatedScope;
 
@@ -16,53 +16,36 @@ describe('Directive: rankingTable', function () {
     rootScope = $rootScope;
     scope = $rootScope.$new();
     scope.participants = [];
-    element = angular.element('<ranking-table participants="participants"></ranking-table>');
+    element = angular.element('<ranking-pie-chart participants="participants"></ranking-pie-chart>');
     element = $compile(element)(scope);
     scope.$digest();
     isolatedScope = element.isolateScope();
     isolatedScope.$digest();
   }));
 
-  it('should have participants initialized', inject(function () {
-    expect(isolatedScope.participants.length).toBe(0);
+  it('should have chart data initialized', inject(function () {
+    expect(isolatedScope.chartLabels).toBeDefined();
+    expect(isolatedScope.chartMessageCount).toBeDefined();
+
+    expect(isolatedScope.chartLabels.length).toBe(0);
+    expect(isolatedScope.chartMessageCount.length).toBe(0);
   }));
 
-  it('should have participants updated', inject(function () {
-    scope.participants = [{}];
-    rootScope.$digest();
-    expect(isolatedScope.participants.length).toBe(1);
-  }));
-
-  it('should update max messages after whole participants list change', inject(function () {
+  it('should update chart data after whole participants list change', inject(function () {
     scope.participants = JSON.parse(participantsJSON);
     rootScope.$digest();
 
     expect(isolatedScope.participants.length).toBe(19);
-    expect(isolatedScope.maxMessages).toBe(916);
+    expect(isolatedScope.chartLabels.length).toBe(19);
+    expect(isolatedScope.chartMessageCount.length).toBe(19);
+
+    // Chart labels should be an array of strings
+    isolatedScope.chartLabels.forEach( function (chartLabel) {
+      expect(chartLabel).toEqual(jasmine.any(String));
+    });
+    // Chart message count should be a list of numbers
+    isolatedScope.chartMessageCount.forEach( function (chartMessageCount) {
+      expect(chartMessageCount).toEqual(jasmine.any(Number));
+    });
   }));
-
-  it('should update max messages after one participant\'s messages change', inject(function () {
-    scope.participants = JSON.parse(participantsJSON);
-    rootScope.$digest();
-
-    var maxMesssagesParticipant = _.max(scope.participants, _.property('totalMessages'));
-    maxMesssagesParticipant.totalMessages++;
-    rootScope.$digest();
-
-    expect(isolatedScope.maxMessages).toBe(917);
-
-  }));
-
-  it('should update max messages after a new participant appear with more messages than max', inject(function () {
-    scope.participants = JSON.parse(participantsJSON);
-    rootScope.$digest();
-
-    var NEW_MAX = 1000;
-    scope.participants.push({totalMessages: NEW_MAX});
-
-    rootScope.$digest();
-
-    expect(isolatedScope.maxMessages).toBe(NEW_MAX);
-  }));
-
 });
