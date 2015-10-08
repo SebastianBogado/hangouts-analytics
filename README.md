@@ -1,8 +1,20 @@
 # LGD Hangouts Analytics
 
+
+## Heroku
 ```
 rm -rf dist
 heroku git:clone -a hangouts-analytics dist
+```
+
+
+## Openshift
+```
+rm -rf dist
+rhc git-clone hangoutsanalytics
+mv $_ dist
+cd $_
+git remote rename origin openshift
 ```
 
 
