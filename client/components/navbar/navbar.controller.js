@@ -7,12 +7,10 @@ angular.module('hangoutsAnalyticsApp')
       'link': '/'
     }, {
       'title': 'Ranking',
-      'link': '/ranking',
-      shouldShow: Auth.isLoggedIn
+      'link': '/ranking'
     }, {
       'title': 'Snapshots',
-      'link': '/snapshots',
-      shouldShow: Auth.isLoggedIn
+      'link': '/snapshots'
     }, {
       'title': 'Admin',
       'link': '/admin',
