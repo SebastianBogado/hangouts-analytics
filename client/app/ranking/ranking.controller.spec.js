@@ -15,7 +15,8 @@ describe('Controller: RankingCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
     httpBackend = $httpBackend;
-    httpBackend.whenGET('/api/participants')
+    httpBackend
+      .whenGET('/api/participants')
       .respond(participantsJSON);
     scope = $rootScope.$new();
     RankingCtrl = $controller('RankingCtrl', {
@@ -46,5 +47,10 @@ describe('Controller: RankingCtrl', function () {
         expect(participants[idx - 1].totalMessages >= participant.totalMessages).toBeTruthy();
       }
     });
+  });
+
+  it('should update participants through the socket', function () {
+    httpBackend.expectGET('/api/participants');
+    httpBackend.flush();
   });
 });

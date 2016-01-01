@@ -32,7 +32,7 @@ function runCron(cron) {
     /*jshint validthis:true */
     cron = cron || this;
     setCronStatus(cron.name, 'running');
-    return task(cron)
+    return task(cron, app)
       .then( function updateRunDates() {
         setCronStatus(cron.name, 'waiting');
         cron.lastRun = new Date();

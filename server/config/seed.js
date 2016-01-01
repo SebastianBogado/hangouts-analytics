@@ -69,6 +69,11 @@ var cronSeeds = [{
   description: 'Counts yearly messages',
   unixExpression: '0 0 0 1 0 *',
   file: './snapshot.yearly'
+}, {
+  name: 'happyNewYear',
+  description: 'Greets LGD and shows yearly results',
+  unixExpression: '0 0 0 1 0 *',
+  file: './happyNewYear'
 }];
 
 
