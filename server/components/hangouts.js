@@ -108,11 +108,11 @@ client.on('chat_message', function(ev) {
 
 
 var reconnect = function() {
-  client.connect(creds).then(function() {
+  return client.connect(creds).then(function() {
     console.log('Connected to hangouts. Shydino approves.');
     //return client.sendchatmessage(process.env.HANGOUTS_CONV_ID || 'UgyU8IOOS2uslw1tjV54AaABAQ',
     //  [[0, 'gg']]);
-  }).done();
+  });
 };
 
 // whenever it fails, we try again
@@ -121,7 +121,12 @@ client.on('connect_failed', function() {
     console.info('connect_failed event. Retrying in 60 seconds');
     // backoff for 60 seconds
     setTimeout(rs, 60000);
-  }).then(reconnect);
+  })
+    .then(reconnect)
+    .fail( function (err) {
+      console.error("Unexpected error while reconnecting. Retrying in 60 seconds", err);
+    })
+    .done();
 });
 
 // start connection
